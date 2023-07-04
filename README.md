@@ -1,4 +1,4 @@
-<h1>Mern Boilerplate</h1>
+<h1>Mernt Boilerplate</h1>
 
 🍳 This is a boilerplate to quickly setup a webapp using Typescript, React, MongoDB, Express and Node.
 
