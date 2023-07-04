@@ -1,0 +1,27 @@
+.show-image-container {
+
+}
+
+.show-book-container {
+    width: 1200px;
+    height: 80vh;
+    margin: auto;
+    padding: 20px;
+}
+
+.show-page-img-ing {
+    padding-right: 40px;
+    padding-top: 50px;
+}
+
+.show-page-description {
+
+}
+
+.card-button-area-show {
+
+}
+
+.show-book {
+    padding-top: 80px;
+}

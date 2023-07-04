@@ -1,0 +1,56 @@
+.card-area {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.book-card {
+    background-color: #f3f0eb;
+    border-radius: 5px;
+    width: 400px;
+    height: 400px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    margin: 20px;
+    padding: 20px;
+}
+
+.card-text-area {
+    position: relative;
+    height: 120px;
+}
+
+.card-button-area {
+    display: flex;
+    /* justify-content: flex-end; */
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+
+}
+
+.show-button, .delete-button, .update-button  {
+    color: #818181;
+    cursor: pointer;
+}
+
+.show-button:hover, .delete-button:hover, .update-button:hover {
+    color: #ED3D1E;
+    transition: all 0.3s ease-in;
+}
+
+
+.card-image-container {
+    /* background-color: grey; */
+    width: 400px;
+    height: 250px;
+    overflow: hidden;
+    
+}

@@ -1,0 +1,7 @@
+.user-button-area {
+    width:250px;
+    margin: auto;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+}

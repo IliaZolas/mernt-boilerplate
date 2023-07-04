@@ -1,0 +1,117 @@
+.container {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.form-container{
+    width: 1300px;
+    margin: auto;
+    position: relative;
+    padding-top: 40px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: auto;
+    padding-left: 550px;
+}
+
+.form-container-login {
+    width: 500px;
+    margin: auto 0;
+}
+
+.labels {
+    padding: 5px 0 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+input {
+    margin: 10px 0 10px 0;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+input[type="file"] {
+    border: none;
+  }
+
+.primary-submit-button {
+    color: white;
+    font-size: 18px;;
+    background-color: red;
+    border: 0px;
+    padding: 20px 10px;
+}
+
+.form-image-container {
+    position: absolute;
+    top: 50px;
+    left:94px;
+    background-color: lightgrey;
+    height: 340px;
+    width: 520px;
+    overflow: hidden;
+    margin: auto;
+}
+
+.new-ramen-image {
+    width:520px;
+}
+
+.hidden {
+    display: none;
+}
+
+.form-user-image-container {
+    position: absolute;
+    top: 50px;
+    left:200px;
+    border-radius: 50%;
+    background-color: lightgrey;
+    width: 250px;
+    height: 250px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+form {
+    padding-bottom: 100px;
+}
+
+.quill {
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.ql-editor {
+    min-height: 100px;
+}
+
+.ql-toolbar.ql-snow {
+    border-radius: 5px 5px 0 0;
+}
+
+.ql-container {
+    /* font-size: 16px !important; */
+}
+
+.login-page-image{
+    position: absolute;
+    top: 80px;
+
+}
+
+.login-form {
+    margin-top: 150px;
+}
