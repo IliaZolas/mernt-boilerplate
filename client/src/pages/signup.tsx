@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import {Image} from 'cloudinary-react';
+import {AdvancedImage} from '@cloudinary/react';
 import { config } from '../config/config';
 import "../components/book-form.css"
 import "./signup.css"
@@ -77,7 +77,7 @@ const handleSubmit = (e) => {
     return (
     <div className="form-container">
         <div className="form-user-image-container">
-            <Image className="new-user-image" cloudName={cloudinaryUsername} publicId={imageUrl} />
+            <AdvancedImage className="new-user-image" cloudName={cloudinaryUsername} publicId={imageUrl} />
         </div>
         <form method="post" onSubmit={handleSubmit} enctype="multipart/form-data">
             <label className="labels">
