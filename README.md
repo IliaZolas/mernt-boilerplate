@@ -12,7 +12,7 @@
 
 **Checklist**
 
-❌ Not ready to yet!
+❌ Not ready yet!
 
 **Instructions**
 
