@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import './App.css';
 import Navbar from './components/navbar';
 import Home from './pages/home';
@@ -12,7 +12,7 @@ import ShowUser from './pages/showUser';
 import UpdateUser from './pages/updateUser';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import ProtectedRoutes from './ProtectedRoutes';
-import { UserContext } from "./UserContext";
+import { User, UserContext, UserContextProps } from "./UserContext";
 import { useMemo, useState } from 'react';
 import { useEffect } from 'react';
 import { config } from './config/config';
@@ -42,7 +42,8 @@ function App() {
     }},
     []);
 
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+    const value: UserContextProps = useMemo(() => ({ user, setUser: setUser as Dispatch<SetStateAction<User | null>> }), [user, setUser]);
+
 
   return (
     <Router>
