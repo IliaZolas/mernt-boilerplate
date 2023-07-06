@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import { useContext } from 'react';
 import { UserContext, UserContextProps} from '../UserContext';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const { user, setUser } = useContext<UserContextProps>(UserContext);
 
   const logout = () => {

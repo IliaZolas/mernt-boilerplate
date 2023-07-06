@@ -23,22 +23,32 @@ const AddUser = () => {
     const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudinaryUsername}/image/upload`
 
     const uploadImage = async (files) => {
-
-        const formData = new FormData()
-        formData.append("file", files.target.files[0])
-        formData.append("upload_preset", `${cloudinaryPreset}`)
-
-        await fetch(uploadUrl, {
-            method: 'POST',
-            body: formData
-            })
-            .then(async (response) => {
-            const data = await response.json();
-            setImageUrl(data.secure_url)
-            setPublicId(data.public_id)
-            })            
-        };
-
+        const selectedFile = files.target.files?.[0];
+  
+        if (selectedFile) {
+          const formData = new FormData();
+          formData.append("file", selectedFile);
+          formData.append("upload_preset", `${cloudinaryPreset}`);
+      
+          try {
+            const response = await fetch(uploadUrl, {
+              method: "POST",
+              body: formData,
+            });
+      
+            if (response.ok) {
+              const data = await response.json();
+              setImageUrl(data.secure_url);
+              setPublicId(data.public_id);
+            } else {
+              console.log("Image upload failed");
+            }
+          } catch (error) {
+            console.error("Error uploading image:", error);
+          }
+        }
+      };
+      
     const AddUser = async ( name, surname, email, password, imageUrl, publicId) => {
         await fetch(`${URL}/signup`, {
         method: 'POST',
