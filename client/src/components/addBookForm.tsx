@@ -55,8 +55,6 @@ const AddBook: React.FC = () => {
     }
   };
 
-  const cldImg = new CloudinaryImage(imageUrl, { cloudName: cloudinaryUsername });
-
   const addBook = async (book: Book) => {
     const userId = localStorage.getItem('id');
     console.log(userId, ": this is the logged in user id");
@@ -89,12 +87,7 @@ const AddBook: React.FC = () => {
   return (
     <div className="form-container">
       <div className="form-image-container">
-        <AdvancedImage 
-            className="new-book-image"
-            cloudName={cloudinaryUsername} 
-            publicId={imageUrl}
-            cldImg={cldImg}
-        />
+        <img src={imageUrl} alt="preview"/>
       </div>
       <form method="post" onSubmit={handleSubmit} encType="multipart/form-data">
         <label className="labels">
