@@ -1,13 +1,21 @@
-import { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from 'react-router-dom';
-import {AdvancedImage} from '@cloudinary/react';
 import { config } from '../config/config';
 import "../components/book-form.css"
 import "./signup.css"
 
 const URL = config.url;
 
-const AddUser = () => {
+interface User {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+    imageUrl: string;
+    publicId: string;
+    }
+
+const AddUser: React.FC = () => {
     const [name, setName ] = useState('');
     const [surname, setSurname ] = useState('');
     const [email, setEmail ] = useState('');
@@ -22,34 +30,34 @@ const AddUser = () => {
 
     const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudinaryUsername}/image/upload`
 
-    const uploadImage = async (files) => {
+    const uploadImage = async (files: ChangeEvent<HTMLInputElement>) => {
         const selectedFile = files.target.files?.[0];
-  
+
         if (selectedFile) {
-          const formData = new FormData();
-          formData.append("file", selectedFile);
-          formData.append("upload_preset", `${cloudinaryPreset}`);
-      
-          try {
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+            formData.append("upload_preset", `${cloudinaryPreset}`);
+        
+            try {
             const response = await fetch(uploadUrl, {
-              method: "POST",
-              body: formData,
+                method: "POST",
+                body: formData,
             });
-      
+        
             if (response.ok) {
-              const data = await response.json();
-              setImageUrl(data.secure_url);
-              setPublicId(data.public_id);
+                const data = await response.json();
+                setImageUrl(data.secure_url);
+                setPublicId(data.public_id);
             } else {
-              console.log("Image upload failed");
+                console.log("Image upload failed");
             }
-          } catch (error) {
+            } catch (error) {
             console.error("Error uploading image:", error);
-          }
+            }
         }
-      };
-      
-    const AddUser = async ( name, surname, email, password, imageUrl, publicId) => {
+        };
+    
+    const AddUser = async ( user: User) => {
         await fetch(`${URL}/signup`, {
         method: 'POST',
         body: JSON.stringify({
@@ -68,10 +76,10 @@ const AddUser = () => {
             console.log(response.json());
         })
         .then(() => {
-        setName();
-        setSurname();
-        setEmail();
-        setPassword();
+        setName('');
+        setSurname('');
+        setEmail('');
+        setPassword('');
         })
         .catch((err) => {
         console.log(err.message , ":error message");
@@ -79,17 +87,25 @@ const AddUser = () => {
     navigate('/books');
 };
 
-const handleSubmit = (e) => {
+const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    AddUser(name, surname, email, password, imageUrl, publicId);
+    const user: User = {
+        name,
+        surname,
+        email,
+        password,
+        imageUrl,
+        publicId,
+    }
+    AddUser(user);
 };
 
     return (
     <div className="form-container">
         <div className="form-user-image-container">
-            <AdvancedImage className="new-user-image" cloudName={cloudinaryUsername} publicId={imageUrl} />
+            <img src={imageUrl} alt="preview"/>
         </div>
-        <form method="post" onSubmit={handleSubmit} enctype="multipart/form-data">
+        <form method="post" onSubmit={handleSubmit} encType="multipart/form-data">
             <label className="labels">
                 Name
                 <input 

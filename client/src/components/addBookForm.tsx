@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from 'react-router-dom';
-import { AdvancedImage } from '@cloudinary/react';
 import { config } from '../config/config';
 import "./book-form.css";
 import ReactQuill from 'react-quill';
