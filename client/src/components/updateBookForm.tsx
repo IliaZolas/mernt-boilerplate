@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { Image } from 'cloudinary-react';
 import { config } from '../config/config';
 import "./book-form.css";
 import ReactQuill from 'react-quill';
@@ -116,7 +115,7 @@ const UpdateBookForm: React.FC = () => {
   return (
     <div className="form-container">
       <div className="form-image-container">
-        <Image className="new-book-image" cloudName={cloudinaryUsername} publicId={imageUrl} />
+        <img src={imageUrl} alt="preview" />
       </div>
       <form method="puts" onSubmit={handleSubmit} encType="multipart/form-data">
         <label className="labels">
