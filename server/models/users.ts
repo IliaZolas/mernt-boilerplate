@@ -1,7 +1,15 @@
-const mongoose = require('mongoose')
+import mongoose, { Document, Schema } from 'mongoose';
 
+interface User extends Document {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+    imageUrl: string;
+    public_id: string;
+}
 
-const newUserTemplate = new mongoose.Schema ({ 
+const UserSchema: Schema = new Schema ({ 
         name:{
             type:String,
             required:true,
@@ -29,4 +37,6 @@ const newUserTemplate = new mongoose.Schema ({
         }
 })
 
-module.exports = mongoose.model('usertable', newUserTemplate )
+const UserModel = mongoose.model<User>('usertable', UserSchema);
+
+export default UserModel;

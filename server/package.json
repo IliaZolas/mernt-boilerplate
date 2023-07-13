@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cloudinary": "^1.37.0",
@@ -18,8 +19,9 @@
     "express": "^4.18.2",
     "file-type": "^18.5.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.2.2",
+    "mongoose": "^7.3.4",
     "next": "^13.4.4",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "typescript": "^5.1.6"
   }
 }
