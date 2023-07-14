@@ -108,8 +108,10 @@ const UpdateBookForm: React.FC = () => {
 
   const handleSubmit = () => {
     const id = params.id;
-    updateBook(id, title, description, imageUrl, publicId);
-    navigate(`/book/show/${id}`);
+    if (id) {
+      updateBook(id, title, description, imageUrl, publicId);
+      navigate(`/book/show/${id}`);
+    }
   };
 
   return (
