@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { Image } from 'cloudinary-react';
 import { config } from '../config/config';
 import "./book-form.css";
 
@@ -42,7 +41,7 @@ const UpdateUserForm: React.FC = () => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [params.id]);
 
   const cloudinaryUsername = process.env.REACT_APP_CLOUDINARY_USERNAME;
 
@@ -111,21 +110,23 @@ const UpdateUserForm: React.FC = () => {
 
   const handleSubmit = () => {
     const id = params.id;
+    if (id) {
     updateUser(id, name, surname, email, imageUrl, publicId);
     navigate(`/user/show/${id}`);
+    }
   };
 
   return (
     <div>
       <div className="form-user-image-container">
-        <Image className="new-user-image" cloudName={cloudinaryUsername} publicId={imageUrl} />
+        <img src={imageUrl} alt="preview" />
       </div>
       <form method="puts" onSubmit={handleSubmit} encType="multipart/form-data">
         <label className="labels">
           Name
           <input
             type="text"
-name="name"
+            name="name"
             placeholder="name"
             value={name}
             onChange={e => setName(e.target.value)} />

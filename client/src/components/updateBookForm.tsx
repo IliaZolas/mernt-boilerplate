@@ -41,7 +41,7 @@ const UpdateBookForm: React.FC = () => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [params.id]);
 
   const cloudinaryUsername = process.env.REACT_APP_CLOUDINARY_USERNAME;
 

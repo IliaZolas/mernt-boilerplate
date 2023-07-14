@@ -11,10 +11,7 @@ const app: Express = express();
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 4000;
 
 mongoose
-  .connect(process.env.DATABASE_ACCESS || '', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.DATABASE_ACCESS || '')
   .then(() => {
     console.log('DB connected');
   })
