@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { config } from '../config/config';
-import "./book-form.css";
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();

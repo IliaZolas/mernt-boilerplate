@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from 'react-router-dom';
 import { config } from '../config/config';
-import "./book-form.css";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import './navbar.css';
 import Cookies from "universal-cookie";
 import { useContext } from 'react';
 import { UserContext, UserContextProps} from '../UserContext';

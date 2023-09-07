@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { config } from '../config/config';
-import "./book-form.css";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 

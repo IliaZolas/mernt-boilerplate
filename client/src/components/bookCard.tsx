@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../UserContext';
-import './book-card.css'
 import Cookies from "universal-cookie";
 import { config } from '../config/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

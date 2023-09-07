@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../UserContext';
 import { config } from '../config/config';
-import "./show-book.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleLeft, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import Cookies from "universal-cookie";

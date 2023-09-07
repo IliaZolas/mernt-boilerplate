@@ -1,8 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from 'react-router-dom';
 import { config } from '../config/config';
-import "../components/book-form.css"
-import "./signup.css"
 
 const URL = config.url;
 
@@ -84,7 +82,7 @@ const AddUser: React.FC = () => {
         .catch((err) => {
         console.log(err.message , ":error message");
     });
-    navigate('/books');
+    navigate('/login');
 };
 
 const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -103,7 +101,7 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     return (
     <div className="form-container">
         <div className="form-user-image-container">
-            <img src={imageUrl} alt="preview"/>
+            <img src={imageUrl} alt="preview" className="img-preview"/>
         </div>
         <form method="post" onSubmit={handleSubmit} encType="multipart/form-data">
             <label className="labels">

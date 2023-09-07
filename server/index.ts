@@ -13,7 +13,7 @@ const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 4000;
 mongoose
   .connect(process.env.DATABASE_ACCESS || '')
   .then(() => {
-    console.log('DB connected');
+    console.log('MongoDB connected');
   })
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);

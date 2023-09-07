@@ -1,6 +1,4 @@
 import BookCard from '../components/bookCard';
-import './books.css'
-
 
 const Books = () => {
     return (
