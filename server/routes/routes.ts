@@ -6,15 +6,38 @@ import Books from '../models/books';
 import Users from '../models/users';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import auth from './auth';
 import cloudinary from 'cloudinary';
+import authMiddleware from './auth';
 
 const routes: Router = express.Router();
 
-// Index Routes
 routes.get('/', (req: Request, res: Response) => {
 res.send('Hello world');
 });
+
+routes.get('/check-auth', (req: Request, res: Response) => {
+    const accessToken = req.cookies.accessToken;
+    console.log("how many times did check-auth fire?")
+    
+        if (!accessToken) {
+            return res.status(401).json({ authenticated: false });
+            }
+            
+            jwt.verify(accessToken, 'accessTokenSecret', (err: any, decoded: any) => {
+            if (err) {
+                return res.status(403).json({ authenticated: false });
+            }
+        
+            const userId = decoded.userId;
+            const userEmail = decoded.userEmail;
+
+            res.status(200).json({
+                authenticated: true,
+                userId: userId,
+                userEmail: userEmail,
+            });
+        });
+    });
 
 // User Routes
 routes.post('/signup', (req: Request, res: Response) => {
@@ -141,14 +164,14 @@ routes.post('/login', (req: Request, res: Response) => {
         });
     });  
 
-routes.get('/user/show/:id', (req: Request, res: Response) => {
+routes.get('/user/show/:id', authMiddleware, (req: Request, res: Response) => {
     const userId = req.params.id;
     console.log('GET SINGLE USER RECORD:', userId);
 
     Users.findOne({ _id: userId }).then((data) => res.json(data));
     });
 
-routes.put('/user/update/:id', auth, (req: Request, res: Response) => {
+routes.put('/user/update/:id', authMiddleware, (req: Request, res: Response) => {
     const userId = req.params.id;
     console.log('update user id route', userId);
 
@@ -164,7 +187,7 @@ routes.put('/user/update/:id', auth, (req: Request, res: Response) => {
     ).then((data) => res.json(data));
     });
 
-routes.delete('/user/delete/:id', (req: Request, res: Response) => {
+routes.delete('/user/delete/:id', authMiddleware, (req: Request, res: Response) => {
     const userId = req.params.id;
     console.log(userId, ':delete route');
     
@@ -194,9 +217,7 @@ routes.delete('/user/delete/:id', (req: Request, res: Response) => {
 
 // Book Routes
 
-routes.post('/book/upload', (req, res) => {});
-
-routes.post('/book/add', (req: Request, res: Response) => {
+routes.post('/book/add', authMiddleware, (req: Request, res: Response) => {
     const newBook = new newBookTemplateCopy({
     title: req.body.title,
     description: req.body.description,
@@ -216,18 +237,18 @@ routes.post('/book/add', (req: Request, res: Response) => {
     });
     });
 
-routes.get('/books/show/:id', (req: Request, res: Response) => {
+routes.get('/books/show/:id', authMiddleware, (req: Request, res: Response) => {
     const bookId = req.params.id;
     console.log('GET SINGLE RECORD:', bookId);
 
     Books.findOne({ _id: bookId }).then((data) => res.json(data));
     });
 
-    routes.get('/books', (req: Request, res: Response) => {
+routes.get('/books', (req: Request, res: Response) => {
     Books.find().then((data) => res.json(data));
     });
 
-    routes.put('/book/update/:id', auth, (req: Request, res: Response) => {
+routes.put('/book/update/:id', authMiddleware, (req: Request, res: Response) => {
     const bookId = req.params.id;
     console.log(bookId, 'update book id route');
 
@@ -242,7 +263,7 @@ routes.get('/books/show/:id', (req: Request, res: Response) => {
     ).then((data) => res.json(data));
     });
 
-routes.delete('/book/delete/:id/:public_id/user/:user_id', auth, async (req: Request, res: Response) => {
+routes.delete('/book/delete/:id/:public_id/user/:user_id', authMiddleware, async (req: Request, res: Response) => {
     try {
         const bookId = req.params.id;
         const book = await Books.findById(bookId);
