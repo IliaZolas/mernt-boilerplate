@@ -36,17 +36,14 @@ function App() {
           return response.json();
         })
         .then((data) => {
-          if (data.authenticated) {
             setUser(data);
-          } else {
-            console.log('User not authenticated');
-          }
-        })
+          })
         .catch((err) => {
           console.error(err.message);
         });
     }
-  }, []);
+  }, [user]); 
+  
 
   const value: UserContextProps = useMemo(
     () => ({ user, setUser: setUser as Dispatch<SetStateAction<User | null>> }),
