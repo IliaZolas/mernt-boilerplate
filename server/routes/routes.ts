@@ -59,6 +59,7 @@ routes.post('/login', (req: Request, res: Response) => {
     Users.findOne({ email: req.body.email })
         .then((user) => {
         console.log('user object:', user);
+
         if (!user) {
             res.status(404).send({
             message: 'Email not found',
@@ -70,23 +71,60 @@ routes.post('/login', (req: Request, res: Response) => {
             .compare(req.body.password, user.password)
             .then((passwordCheck) => {
             console.log('password check object:', passwordCheck);
-            if (!passwordCheck) {
-                console.log('No password provided');
+
+            if (passwordCheck === false) {
+                console.log('No password provided or wrong password');
+                res.status(200).send({
+                    message: 'Login Failed',
+                    email: user.email,
+                    userId: user._id,
+                    passwordCheck
+                });
+            } else {
+
+                const refreshToken = jwt.sign(
+                    {
+                        userId: user._id,
+                        userEmail: user.email,
+                    },
+                    'refreshTokenSecret',
+                    { expiresIn: '7d' } 
+                );
+
+                const accessToken = jwt.sign(
+                    {
+                        userId: user._id,
+                        userEmail: user.email,
+                        refreshToken: refreshToken,
+                    },
+                    'accessTokenSecret',
+                    { expiresIn: '24h' }
+                );
+                console.log("login route: token ->",accessToken)
+                console.log("Login route: refreshToken ->",refreshToken)
+                
+                res.cookie("accessToken", accessToken, {
+                    httpOnly: true, 
+                    sameSite: "none",
+                    secure: true, 
+                    maxAge: 300000,
+                });
+                
+                res.cookie("refreshToken", refreshToken, {
+                    httpOnly: true,
+                    sameSite: "none",
+                    secure: true,
+                    maxAge: 300000,
+                });
+                
+                res.status(200).send({
+                    message: 'Login Successful',
+                    email: user.email,
+                    userId: user._id,
+                    accessToken,
+                    refreshToken
+                });
             }
-            const token = jwt.sign(
-                {
-                userId: user._id,
-                userEmail: user.email,
-                },
-                'RANDOM-TOKEN',
-                { expiresIn: '24h' }
-            );
-            res.status(200).send({
-                message: 'Login Successful',
-                email: user.email,
-                userId: user._id,
-                token,
-            });
             })
             .catch((error) => {
             res.status(400).send({

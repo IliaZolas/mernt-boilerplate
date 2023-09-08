@@ -14,4 +14,8 @@ export interface UserContextProps {
   setUser: Dispatch<SetStateAction<User | null>>;
 }
 
-export const UserContext = createContext<UserContextProps | null>(null);
+export const UserContext = createContext<UserContextProps>({
+  user: null,
+  setUser: () => {},
+});
+

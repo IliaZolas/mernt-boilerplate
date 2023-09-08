@@ -1,0 +1,92 @@
+.background {
+    background-image: url('https://source.unsplash.com/random/?digital');
+    background-repeat: no-repeat;
+    background-size: cover;
+    // height: 1000px;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.form-container{
+    // width: 1300px;
+    margin: auto;
+    position: relative;
+    padding-top: 40px;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.884);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: auto;
+}
+
+.form-container-login {
+    margin: auto 0;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.884);
+}
+
+.labels {
+    padding: 5px 0 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+input {
+    margin: 10px 0 10px 0;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+input[type="file"] {
+    border: none;
+  }
+
+.primary-submit-button {
+    color: white;
+    font-size: 18px;;
+    background-color: red;
+    border: 0px;
+    padding: 20px 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.form-user-image-container {
+    border-radius: 50%;
+    background-color: #009c9c7e;
+    width: 250px;
+    height: 250px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+form {
+    padding-bottom: 100px;
+}
+
+
+.login-form {
+    padding-top: 150px;
+}
+
+@media (max-width: 768px) {
+
+        form {
+            width: 310px;
+        }
+
+    }
