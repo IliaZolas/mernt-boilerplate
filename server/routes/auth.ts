@@ -11,8 +11,8 @@ declare global {
 
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // console.log("how many times did auth.ts fire?")
     let token = req.cookies.accessToken;
+    console.log("token in auth", token)
 
     if (!token) {
       throw new Error("No token provided");

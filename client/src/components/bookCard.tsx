@@ -24,7 +24,6 @@ const BookCard = () => {
     fetch(`${URL}/books`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setBooks(data);
       })
       .catch((err) => {
@@ -33,11 +32,7 @@ const BookCard = () => {
   }, []);
 
   const deleteBook = async (id: string, public_id: string, user_id: string, user: string) => {
-    console.log("delete:", id);
-    console.log("delete:", public_id);
-    console.log("user who created book", user);
     const theLoggedInUser = localStorage.getItem('id');
-    console.log("logged in user who is trying to delete book", theLoggedInUser);
 
     if (user !== theLoggedInUser) {
       console.log("you cannot delete another person's book");
@@ -72,7 +67,7 @@ const BookCard = () => {
       <div className="card-area">
         {books.map((book) => {
           return (
-            <div id={book._id} className="book-card">
+            <div key={book._id} id={book._id} className="book-card">
               <div className="card-image-container">
                 <img src={book.imageUrl} alt="" style={{ width: 400 }} />
               </div>

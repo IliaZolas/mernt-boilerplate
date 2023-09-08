@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { config } from '../config/config';
 
 import Cookies from "universal-cookie";
-const cookies = new Cookies();
+const cookie = new Cookies();
 
 const URL = config.url;
 
@@ -24,10 +24,16 @@ const UpdateUserForm: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
 
+  const token = cookie.get("accessToken")
+
   useEffect(() => {
     const id = params.id;
     fetch(`${URL}/user/show/${id}`, {
       method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+    },
+      
     })
       .then((response) => response.json())
       .then((data: User) => {
@@ -40,7 +46,7 @@ const UpdateUserForm: React.FC = () => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [params.id]);
+  }, [params.id, token]);
 
   const cloudinaryUsername = process.env.REACT_APP_CLOUDINARY_USERNAME;
 
@@ -76,7 +82,8 @@ const UpdateUserForm: React.FC = () => {
   };
 
   const updateUser = async (id: string, name: string, surname: string, email: string, imageUrl: string, publicId: string) => {
-    const token = cookies.get("TOKEN");
+    const token = cookie.get("accessToken");
+    console.log("UpdateUserForm.tsx token -->",token)
 
     await fetch(`${URL}/user/update/${id}`, {
       method: 'PUT',
@@ -116,61 +123,61 @@ const UpdateUserForm: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="form-user-image-container">
-        <img src={imageUrl} alt="preview" />
+      <div className="form-container">
+        <div className="form-user-image-container">
+          <img src={imageUrl} alt="preview" className="new-user-image" />
+        </div>
+        <form method="puts" onSubmit={handleSubmit} encType="multipart/form-data">
+          <label className="labels">
+            Name
+            <input
+              type="text"
+              name="name"
+              placeholder="name"
+              value={name}
+              onChange={e => setName(e.target.value)} />
+          </label>
+          <label className="labels">
+            Surname
+            <input
+              type="text"
+              name="surname"
+              placeholder="surname"
+              value={surname}
+              onChange={e => setSurname(e.target.value)} />
+          </label>
+          <label className="labels">
+            Email
+            <input
+              type="text"
+              name="email"
+              placeholder="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)} />
+          </label>
+          <label className="labels">
+            Image
+            <input type="file" name="book" onChange={uploadImage}/>
+          </label>
+          <label className="labels hidden">
+            imageUrl
+            <input
+              type="text"
+              name="imageUrl"
+              value={imageUrl}
+              onChange={e => setImageUrl(e.target.value)} />
+          </label>
+          <label className="labels hidden">
+            publicId
+            <input
+              type="text"
+              name="publicId"
+              value={publicId}
+              onChange={e => setPublicId(e.target.value)} />
+          </label>
+          <input type="submit" value="Submit" className="primary-submit-button" />
+        </form>
       </div>
-      <form method="puts" onSubmit={handleSubmit} encType="multipart/form-data">
-        <label className="labels">
-          Name
-          <input
-            type="text"
-            name="name"
-            placeholder="name"
-            value={name}
-            onChange={e => setName(e.target.value)} />
-        </label>
-        <label className="labels">
-          Surname
-          <input
-            type="text"
-            name="surname"
-            placeholder="surname"
-            value={surname}
-            onChange={e => setSurname(e.target.value)} />
-        </label>
-        <label className="labels">
-          Email
-          <input
-            type="text"
-            name="email"
-            placeholder="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)} />
-        </label>
-        <label className="labels">
-          Image
-          <input type="file" name="book" onChange={uploadImage}/>
-        </label>
-        <label className="labels hidden">
-          imageUrl
-          <input
-            type="text"
-            name="imageUrl"
-            value={imageUrl}
-            onChange={e => setImageUrl(e.target.value)} />
-        </label>
-        <label className="labels hidden">
-          publicId
-          <input
-            type="text"
-            name="publicId"
-            value={publicId}
-            onChange={e => setPublicId(e.target.value)} />
-        </label>
-        <input type="submit" value="Submit" className="primary-submit-button" />
-      </form>
-    </div>
   );
 };
 

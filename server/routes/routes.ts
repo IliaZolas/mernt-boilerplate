@@ -17,7 +17,7 @@ res.send('Hello world');
 
 routes.get('/check-auth', (req: Request, res: Response) => {
     const accessToken = req.cookies.accessToken;
-    console.log("how many times did check-auth fire?")
+    console.log("access token:", accessToken)
     
         if (!accessToken) {
             return res.status(401).json({ authenticated: false });
@@ -219,6 +219,11 @@ routes.delete('/user/delete/:id', authMiddleware, (req: Request, res: Response) 
         .destroy(publicId)
         .then((result) => console.log('cloudinary delete', result))
         .catch((_err) => console.log('Something went wrong, please try again later.'));
+
+    res.clearCookie('accessToken', { httpOnly: true, sameSite: 'none', secure: true, path: '/' });
+    res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'none', secure: true, path: '/' });
+    res.status(200).json({ message: 'Logout successful' });
+
     });
     
 
