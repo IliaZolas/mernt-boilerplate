@@ -1,19 +1,40 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import { useContext } from 'react';
 import { UserContext, UserContextProps} from '../UserContext';
+import { config } from '../config/config';
+
+const URL = config.url;
 
 const Navbar: React.FC = () => {
   const { user, setUser } = useContext<UserContextProps>(UserContext);
+  const navigate = useNavigate();
 
-  const logout = () => {
-    const cookies = new Cookies();
-    cookies.remove("TOKEN", { path: "/" });
-    localStorage.clear();
-    setUser(null);
+  const logout = async () => {
+    console.log('Logout button clicked');
+    try {
+      const response = await fetch(`${URL}/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+  
+      if (response.ok) {
+        const cookies = new Cookies();
+        cookies.remove("accessToken", { path: "/", domain: "localhost", secure: true });
+        cookies.remove("refreshToken", { path: "/", domain: "localhost", secure: true });
+        sessionStorage.clear();
+        setUser(null);
+        console.log('Logout successful');
+        navigate('/')
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
-  const id = localStorage.getItem('id');
+  const id = sessionStorage.getItem('id');
 
   return (
     <div className="navbar">

@@ -42,7 +42,7 @@ const LoginUser: React.FC = () => {
                     setEmail('');
                     setPassword('');
                     setUser(result);
-                    navigate('/game', { state: { token: result.token } });
+                    navigate('/books', { state: { token: result.token } });
                 } else {
                     handleFailedLogin();
                 } 

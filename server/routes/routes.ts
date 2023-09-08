@@ -164,6 +164,13 @@ routes.post('/login', (req: Request, res: Response) => {
         });
     });  
 
+routes.post('/logout', (req, res) => {
+        console.log("tried to logout")
+        res.clearCookie('accessToken', { httpOnly: true, sameSite: 'none', secure: true, path: '/' });
+        res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'none', secure: true, path: '/' });
+        res.status(200).json({ message: 'Logout successful' });
+    });
+
 routes.get('/user/show/:id', authMiddleware, (req: Request, res: Response) => {
     const userId = req.params.id;
     console.log('GET SINGLE USER RECORD:', userId);

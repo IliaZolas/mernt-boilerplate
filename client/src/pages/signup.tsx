@@ -20,6 +20,7 @@ const AddUser: React.FC = () => {
     const [password, setPassword] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [publicId, setPublicId] = useState('');
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
     const navigate = useNavigate();
 
     const cloudinaryUsername = process.env.REACT_APP_CLOUDINARY_USERNAME
@@ -81,84 +82,95 @@ const AddUser: React.FC = () => {
         })
         .catch((err) => {
         console.log(err.message , ":error message");
-    });
-    navigate('/login');
-};
+        });
+        navigate('/login');
+    };
 
-const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const user: User = {
-        name,
-        surname,
-        email,
-        password,
-        imageUrl,
-        publicId,
-    }
-    AddUser(user);
-};
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const user: User = {
+            name,
+            surname,
+            email,
+            password,
+            imageUrl,
+            publicId,
+        }
+        AddUser(user);
+    };
+
+    const allFieldsEntered = name && surname && email && password && imageUrl && publicId;
 
     return (
-    <div className="form-container">
-        <div className="form-user-image-container">
-            <img src={imageUrl} alt="preview" className="img-preview"/>
+        <div className="form-container">
+            <div className="form-user-image-container">
+                {imageUrl && <img src={imageUrl} alt="preview" className="new-user-image" onLoad={() => setIsImageLoaded(true)} />}
+            </div>
+            <p>* Please fill in all fields and upload a picture</p>
+            <form method="post" onSubmit={handleSubmit} encType="multipart/form-data">
+                    <input 
+                        type="text" 
+                        name="name" 
+                        placeholder="* Name"
+                        onChange={e => setName(e.target.value)} />
+                    <input 
+                        type="text" 
+                        name="surname" 
+                        placeholder="* Surname"
+                        onChange={e => setSurname(e.target.value)} />
+                    <input
+                        type="text" 
+                        name="email" 
+                        placeholder="* Email"
+                        onChange={e => setEmail(e.target.value)} />
+                    <input 
+                        type="text" 
+                        name="password" 
+                        placeholder="* Password"
+                        onChange={e => setPassword(e.target.value)} />
+                <label className="labels">
+                    * Profile Picture 
+                    <br/>- Please allow your picture to load
+                    <br/>- File size under 1MB
+                    <input type="file" name="book" onChange={uploadImage}/>
+                </label>
+                <label className="labels hidden">
+                    imageUrl
+                    <input
+                        type="text" 
+                        name="imageUrl" 
+                        value={imageUrl}
+                        onChange={e => setImageUrl(e.target.value)} />
+                </label>
+                <label className="labels hidden">
+                    publicId
+                    <input
+                        type="text" 
+                        name="publicId" 
+                        value={publicId}
+                        onChange={e => setPublicId(e.target.value)} />
+                </label>
+                {isImageLoaded && allFieldsEntered ? (
+                        <input
+                            type="submit"
+                            value="Signup"
+                            className="primary-submit-button"
+                            disabled={!isImageLoaded}
+                        />
+                    ) : (
+                        <input
+                            type="submit"
+                            value="Fill in form first"
+                            className="primary-submit-button-grey"
+                            disabled={!isImageLoaded}
+                        />
+                    )}
+                <p>
+                    Please note that you will be redirected to login
+                    <br/>Use the same details to enter and begin playing
+                </p>
+            </form>
         </div>
-        <form method="post" onSubmit={handleSubmit} encType="multipart/form-data">
-            <label className="labels">
-                Name
-                <input 
-                    type="text" 
-                    name="name" 
-                    placeholder="name"
-                    onChange={e => setName(e.target.value)} />
-            </label>
-            <label className="labels">
-                Surname
-                <input 
-                    type="text" 
-                    name="surname" 
-                    placeholder="surname"
-                    onChange={e => setSurname(e.target.value)} />
-            </label>
-            <label className="labels">
-                Email
-                <input
-                    type="text" 
-                    name="email" 
-                    placeholder="email"
-                    onChange={e => setEmail(e.target.value)} />
-            </label>
-            <label className="labels">
-                Password
-                <input 
-                    type="text" 
-                    name="password" 
-                    placeholder="password"
-                    onChange={e => setPassword(e.target.value)} />
-            </label>
-            <label className="labels">
-                Image
-                <input type="file" name="book" onChange={uploadImage}/>
-            </label>
-            <label className="labels hidden">
-                imageUrl
-                <input
-                    type="text" 
-                    name="imageUrl" 
-                    value={imageUrl}
-                    onChange={e => setImageUrl(e.target.value)} />
-            </label>
-            <label className="labels hidden">
-                publicId
-                <input
-                    type="text" 
-                    name="publicId" 
-                    value={publicId}
-                    onChange={e => setPublicId(e.target.value)} />
-            </label>
-            <input type="submit" value="Submit" className="primary-submit-button" />
-        </form>
-    </div>
     )
 };
 

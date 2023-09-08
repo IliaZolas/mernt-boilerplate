@@ -1,7 +1,25 @@
-.primary-button {
+.primary-button, .primary-submit-button {
     color: white;
     text-decoration: none;
-    background-color: #ED3D1E;
+    background-color: red;
     padding: 15px 20px;
     cursor: pointer;
+}
+
+.primary-submit-button-grey {
+    color: white;
+    text-decoration: none;
+    background-color: grey;
+    padding: 15px 20px;
+}
+
+
+.secondary-button {
+    color: #009c9c;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-container {
+    padding: 10px;
 }
