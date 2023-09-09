@@ -5,8 +5,6 @@ import { UserContext } from '../UserContext';
 import { config } from '../config/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleLeft, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
 
 interface Book {
 _id: string;
@@ -40,16 +38,13 @@ useEffect(() => {
         });
     }, [params.id, book]);
 
-    const deleteBook = async (id: string, public_id: string) => {
+    const deleteBook = async (id: string, public_id: string, user_id: string) => {
     console.log("delete:", id);
     console.log("delete:", public_id);
-    const token = cookies.get("TOKEN");
 
-    fetch(`${URL}/book/delete/${id}/${public_id}`, {
-        method: 'DELETE',
-        headers: {
-        'Authorization': `${token}`,
-        },
+    fetch(`${URL}/book/delete/${id}/${public_id}/user/${user_id}`, {
+        method: "DELETE",
+        credentials: "include"
     })
         .then((response) => {
         if (response.status === 200) {
@@ -86,7 +81,7 @@ useEffect(() => {
                 <div className="card-button-area-show flex">
                 <div className="show-button button" onClick={() => allBooks()} ><FontAwesomeIcon icon={faCircleLeft} className="back" /> Back to list</div>
                 <div className="update-button button" onClick={() => updateBook(book?._id || '')} ><FontAwesomeIcon icon={faPenToSquare} className="update" /> Update</div>
-                <div className="delete-button button" onClick={() => deleteBook(book?._id || '', book?.public_id || '')} id={book?._id || ''} ><FontAwesomeIcon icon={faTrash} className="delete" /> Delete</div>
+                <div className="delete-button button" onClick={() => deleteBook(book?._id || '', book?.public_id || '',  sessionStorage.getItem('id')!)} id={book?._id || ''} ><FontAwesomeIcon icon={faTrash} className="delete" /> Delete</div>
                 </div>
             ) : (
                 <div className="card-button-area-show">
