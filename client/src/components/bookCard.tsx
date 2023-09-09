@@ -2,12 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../UserContext';
-import Cookies from "universal-cookie";
 import { config } from '../config/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
-
-const cookies = new Cookies();
 
 const URL = config.url;
 
@@ -16,8 +13,6 @@ const BookCard = () => {
   const userContext = useContext(UserContext);
   const user = userContext?.user;
   const navigate = useNavigate();
-
-  const token = cookies.get("TOKEN");
 
   useEffect(() => {
     fetch(`${URL}/books`)
@@ -31,19 +26,19 @@ const BookCard = () => {
   }, []);
 
   const deleteBook = async (id: string, public_id: string, user_id: string, user: string) => {
-    const theLoggedInUser = localStorage.getItem('id');
+    const theLoggedInUser = sessionStorage.getItem('id');
+    console.log("logged in user id", theLoggedInUser)
+    console.log("user:", user)
 
     if (user !== theLoggedInUser) {
       console.log("you cannot delete another person's book");
     }
 
     await fetch(`${URL}/book/delete/${id}/${public_id}/user/${user_id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `${token}`
-      },
+      method: "DELETE",
+      credentials: "include",
     }).then((response) => {
-      if (response.status === 200) {
+      if (response.ok) {
         setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
         console.log("Book deleted");
       } else {
