@@ -19,6 +19,7 @@ const AddBook: React.FC = () => {
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [publicId, setPublicId] = useState('');
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const navigate = useNavigate();
 
   const cloudinaryUsername = process.env.REACT_APP_CLOUDINARY_USERNAME;
@@ -85,7 +86,8 @@ const AddBook: React.FC = () => {
   return (
     <div className="form-container">
       <div className="form-image-container">
-        <img src={imageUrl} alt="preview"/>
+        {imageUrl && <img src={imageUrl} alt="preview" onLoad={() => setIsImageLoaded(true)} />
+        }
       </div>
       <form method="post" onSubmit={handleSubmit} encType="multipart/form-data">
         <label className="labels">

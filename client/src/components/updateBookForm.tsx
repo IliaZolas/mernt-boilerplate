@@ -28,7 +28,8 @@ const UpdateBookForm: React.FC = () => {
   useEffect(() => {
     const id = params.id;
     fetch(`${URL}/books/show/${id}`, {
-      method: 'GET',
+      method: "GET",
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data: Book) => {
@@ -76,20 +77,16 @@ const UpdateBookForm: React.FC = () => {
   };
   
   const updateBook = async (id: string, title: string, description: string, imageUrl: string, publicId: string) => {
-    const token = cookies.get("TOKEN");
 
     await fetch(`${URL}/book/update/${id}`, {
-      method: 'PUT',
+      method: "PUT",
+      credentials: "include",
       body: JSON.stringify({
         title: title,
         description: description,
         imageUrl: imageUrl,
         publicId: publicId
       }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'Authorization': `${token}`,
-      },
     })
       .then((response) => {
         response.json();
