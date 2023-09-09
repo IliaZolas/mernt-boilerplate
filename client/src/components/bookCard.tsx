@@ -10,7 +10,6 @@ import { faPenToSquare, faEye, faTrash } from '@fortawesome/free-solid-svg-icons
 const cookies = new Cookies();
 
 const URL = config.url;
-console.log("prod or dev?", URL)
 
 const BookCard = () => {
   const [books, setBooks] = useState<any[]>([]);

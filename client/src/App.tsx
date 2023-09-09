@@ -42,7 +42,7 @@ function App() {
           console.error(err.message);
         });
     }
-  }, [user]); 
+  }, []); 
   
 
   const value: UserContextProps = useMemo(

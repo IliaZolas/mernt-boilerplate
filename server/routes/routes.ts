@@ -165,7 +165,6 @@ routes.post('/login', (req: Request, res: Response) => {
     });  
 
 routes.post('/logout', (req, res) => {
-        console.log("tried to logout")
         res.clearCookie('accessToken', { httpOnly: true, sameSite: 'none', secure: true, path: '/' });
         res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'none', secure: true, path: '/' });
         res.status(200).json({ message: 'Logout successful' });

@@ -53,11 +53,12 @@ const AddBook: React.FC = () => {
   };
 
   const addBook = async (book: Book) => {
-    const userId = localStorage.getItem('id');
+    const userId = sessionStorage.getItem('id');
     console.log(userId, ": this is the logged in user id");
 
     await fetch(`${URL}/book/add`, {
-      method: 'POST',
+      method: "POST",
+      credentials: "include",
       body: JSON.stringify(book),
       headers: {
         'Content-type': 'application/json; charset=UTF-8'
@@ -76,7 +77,7 @@ const AddBook: React.FC = () => {
       description,
       imageUrl,
       publicId,
-      user: localStorage.getItem('id') || ''
+      user: sessionStorage.getItem('id') || ''
     };
     addBook(book);
   };
