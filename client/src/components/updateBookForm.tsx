@@ -87,6 +87,9 @@ const UpdateBookForm: React.FC = () => {
         imageUrl: imageUrl,
         publicId: publicId
       }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
     })
       .then((response) => {
         response.json();
@@ -122,7 +125,7 @@ const UpdateBookForm: React.FC = () => {
             type="text"
             name="title"
             placeholder={title}
-value={title}
+            value={title}
             onChange={e => setTitle(e.target.value)} />
         </label>
         <label className="labels">

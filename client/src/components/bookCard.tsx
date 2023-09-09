@@ -23,7 +23,7 @@ const BookCard = () => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [books]);
 
   const deleteBook = async (id: string, public_id: string, user_id: string, user: string) => {
     const theLoggedInUser = sessionStorage.getItem('id');

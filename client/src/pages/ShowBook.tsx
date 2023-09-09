@@ -38,7 +38,7 @@ useEffect(() => {
         .catch((err) => {
         console.log(err.message);
         });
-    }, [params.id]);
+    }, [params.id, book]);
 
     const deleteBook = async (id: string, public_id: string) => {
     console.log("delete:", id);

@@ -261,7 +261,7 @@ routes.get('/books', (req: Request, res: Response) => {
 
 routes.put('/book/update/:id', authMiddleware, (req: Request, res: Response) => {
     const bookId = req.params.id;
-    console.log(bookId, 'update book id route');
+    console.log('update book id route', bookId);
 
     Books.updateOne({ _id: bookId },
     {
