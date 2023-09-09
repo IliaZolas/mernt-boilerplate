@@ -76,7 +76,7 @@ const BookCard = () => {
                     <div className="update-button button" onClick={() => updateBook(book._id)}>
                       <FontAwesomeIcon icon={faPenToSquare} className="update" />
                     </div>
-                    <div className="delete-button button" onClick={() => deleteBook(book._id, book.public_id, localStorage.getItem('id')!, book.user)} id={book.id}>
+                    <div className="delete-button button" onClick={() => deleteBook(book._id, book.public_id, sessionStorage.getItem('id')!, book.user)} id={book.id}>
                       <FontAwesomeIcon icon={faTrash} className="delete" />
                     </div>
                   </div>

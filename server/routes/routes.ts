@@ -285,7 +285,9 @@ routes.delete('/book/delete/:id/:public_id/user/:user_id', authMiddleware, async
 
         const bookUser = book.user.toString();
         const loggedInUser = req.params.user_id;
+        const loggedInUserTest = req.params;
         console.log('do these numbers match?:', bookUser, ':', loggedInUser);
+        console.log('is user id here?:', loggedInUserTest);
 
         // Check if the user is allowed to delete the book
         if (bookUser !== loggedInUser) {
