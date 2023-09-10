@@ -18,6 +18,7 @@ const URL = config.url;
 
 const ShowBook: React.FC = () => {
 const [book, setBook] = useState<Book | null>(null);
+const [updated, setUpdated] = useState(false);
 const { user } = useContext(UserContext);
 const navigate = useNavigate();
 const params = useParams();
@@ -25,7 +26,9 @@ const params = useParams();
 useEffect(() => {
     const id = params.id as string;
 
-    fetch(`${URL}/books/show/${id}`, {
+    const fetchBookData = async () => {
+        
+        fetch(`${URL}/books/show/${id}`, {
         method: "GET",
         credentials: "include",
     })
@@ -35,8 +38,16 @@ useEffect(() => {
         })
         .catch((err) => {
         console.log(err.message);
-        });
-    }, [params.id, book]);
+        }
+    )};
+    
+    if (updated) {
+        fetchBookData();
+        setUpdated(false); // Reset the updated flag
+        } else {
+        fetchBookData();
+        }
+    }, [params.id, updated, book]);
 
     const deleteBook = async (id: string, public_id: string, user_id: string) => {
     console.log("delete:", id);

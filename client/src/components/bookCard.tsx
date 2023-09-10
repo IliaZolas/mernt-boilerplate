@@ -15,15 +15,18 @@ const BookCard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${URL}/books`)
+    const fetchBooks = async () => {
+      fetch(`${URL}/books`)
       .then((response) => response.json())
       .then((data) => {
         setBooks(data);
       })
       .catch((err) => {
         console.log(err.message);
-      });
-  }, [books]);
+      })
+    };
+    fetchBooks();
+  }, []);
 
   const deleteBook = async (id: string, public_id: string, user_id: string, user: string) => {
     const theLoggedInUser = sessionStorage.getItem('id');
