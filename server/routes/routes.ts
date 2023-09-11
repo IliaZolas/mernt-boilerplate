@@ -41,39 +41,39 @@ routes.get('/check-auth', (req: Request, res: Response) => {
 
 // User Routes
 routes.post('/signup', (req: Request, res: Response) => {
-bcrypt
-.hash(req.body.password, 10)
-.then((hashedPassword) => {
-    const user = new newUserTemplateCopy({
-    name: req.body.name,
-    surname: req.body.surname,
-    email: req.body.email,
-    password: hashedPassword,
-    imageUrl: req.body.imageUrl,
-    public_id: req.body.publicId,
-    });
+    bcrypt
+    .hash(req.body.password, 10)
+    .then((hashedPassword) => {
+        const user = new newUserTemplateCopy({
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        password: hashedPassword,
+        imageUrl: req.body.imageUrl,
+        public_id: req.body.publicId,
+        });
 
-    user
-    .save()
-    .then((result) => {
-        res.status(201).send({
-        message: 'User Created Successfully',
-        result,
+        user
+        .save()
+        .then((result) => {
+            res.status(201).send({
+            message: 'User Created Successfully',
+            result,
+            });
+        })
+        .catch((error) => {
+            res.status(500).send({
+            message: 'Error creating user',
+            error,
+            });
         });
     })
-    .catch((error) => {
+    .catch((e) => {
         res.status(500).send({
-        message: 'Error creating user',
-        error,
+        message: 'Password was not hashed successfully',
+        e,
         });
     });
-})
-.catch((e) => {
-    res.status(500).send({
-    message: 'Password was not hashed successfully',
-    e,
-    });
-});
 });
 
 routes.post('/login', (req: Request, res: Response) => {
@@ -286,7 +286,6 @@ routes.delete('/book/delete/:id/:public_id/user/:user_id', authMiddleware, async
         const loggedInUser = req.params.user_id;
         const loggedInUserTest = req.params;
         console.log('do these numbers match?:', bookUser, ':', loggedInUser);
-        console.log('is user id here?:', loggedInUserTest);
 
         // Check if the user is allowed to delete the book
         if (bookUser !== loggedInUser) {
